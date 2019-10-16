@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:augarde_2048/view/page/home.dart';
+import 'package:augarde_2048/controller/log_controller.dart';
 
 void main() => runApp(MyApp());
 
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         fontFamily: 'StarJedi'
       ),
-      home: HomePage(),
+      home: LogController(),
       debugShowCheckedModeBanner: false,
     );
   }
