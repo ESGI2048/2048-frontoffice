@@ -104,6 +104,34 @@ class _HomePageState extends State<HomePage> {
                         },
                       ),
                     ),
+                    isGameOver
+                        ? Container(
+                      height: height,
+                      color: Color(transparentWhite),
+                      child: Center(
+                        child: MyText(
+                          'Game over !',
+                          fontSize: 30.0,
+                          textBold: true,
+                          color: Color(gridBackground),
+                        ),
+                      ),
+                    )
+                        : SizedBox(),
+                    isGameWon
+                        ? Container(
+                      height: height,
+                      color: Color(transparentWhite),
+                      child: Center(
+                        child: MyText(
+                          'You won !',
+                          fontSize: 30.0,
+                          textBold: true,
+                          color: Color(gridBackground),
+                        ),
+                      ),
+                    )
+                        : SizedBox(),
                   ],
                 ),
               ),
