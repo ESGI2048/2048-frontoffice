@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:augarde_2048/view/my_material.dart';
 import 'package:augarde_2048/controller/grid.dart';
+import 'package:augarde_2048/controller/game.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -11,8 +12,8 @@ class _HomePageState extends State<HomePage> {
   List<List<int>> grid = [];
   List<List<int>> gridNew = [];
   int score = 0;
-  bool isGameOver = false;
-  bool isGameWon = false;
+  bool isgameOver = false;
+  bool isgameWon = false;
 
   @override
   void initState() {
@@ -46,7 +47,7 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.all(10.0),
+                padding: EdgeInsets.only(bottom: 20.0),
                 child: Container(
                   width: 200.0,
                   height: 82.0,
@@ -89,22 +90,22 @@ class _HomePageState extends State<HomePage> {
                         onVerticalDragEnd: (DragEndDetails details) {
                           //primaryVelocity -ve up +ve down
                           if (details.primaryVelocity < 0) {
-                            // handleGesture(0);
+                             handleGesture(0);
                           } else if (details.primaryVelocity > 0) {
-                            // handleGesture(1);
+                             handleGesture(1);
                           }
                         },
                         onHorizontalDragEnd: (details) {
                           //-ve right, +ve left
                           if (details.primaryVelocity > 0) {
-                            // handleGesture(2);
+                             handleGesture(2);
                           } else if (details.primaryVelocity < 0) {
-                            // handleGesture(3);
+                             handleGesture(3);
                           }
                         },
                       ),
                     ),
-                    isGameOver
+                    isgameOver
                         ? Container(
                       height: height,
                       color: Color(transparentWhite),
@@ -118,7 +119,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     )
                         : SizedBox(),
-                    isGameWon
+                    isgameWon
                         ? Container(
                       height: height,
                       color: Color(transparentWhite),
@@ -136,7 +137,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.all(10.0),
+                padding: EdgeInsets.all(20.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
@@ -157,8 +158,8 @@ class _HomePageState extends State<HomePage> {
                               grid = addNumber(grid, gridNew);
                               grid = addNumber(grid, gridNew);
                               score = 0;
-                              isGameOver = false;
-                              isGameWon = false;
+                              isgameOver = false;
+                              isgameWon = false;
                             });
                           },
                         ),
@@ -220,5 +221,97 @@ class _HomePageState extends State<HomePage> {
       }
     }
     return grids;
+  }
+
+
+  void handleGesture(int direction) {
+    /*
+      0 = up
+      1 = down
+      2 = left
+      3 = right
+    */
+    bool flipped = false;
+    bool played = true;
+    bool rotated = false;
+
+    if (direction == 0) {
+      setState(() {
+        grid = transposeGrid(grid);
+        grid = flipGrid(grid);
+        rotated = true;
+        flipped = true;
+      });
+    } else if (direction == 1) {
+      setState(() {
+        grid = transposeGrid(grid);
+        rotated = true;
+      });
+    } else if (direction == 2) {
+    } else if (direction == 3) {
+      setState(() {
+        grid = flipGrid(grid);
+        flipped = true;
+      });
+    } else {
+      played = false;
+    }
+
+    if (played) {
+      print('playing');
+      List<List<int>> past = copyGrid(grid);
+      print('past $past');
+      for (int i = 0; i < 4; i++) {
+        setState(() {
+          List result = operate(grid[i], score);
+          score = result[0];
+          print('score in set state $score');
+          grid[i] = result[1];
+        });
+      }
+      setState(() {
+        grid = addNumber(grid, gridNew);
+      });
+      bool changed = compare(past, grid);
+      print('changed $changed');
+      if (flipped) {
+        setState(() {
+          grid = flipGrid(grid);
+        });
+      }
+
+      if (rotated) {
+        setState(() {
+          grid = transposeGrid(grid);
+        });
+      }
+
+      if (changed) {
+        setState(() {
+          grid = addNumber(grid, gridNew);
+          print('is changed');
+        });
+      } else {
+        print('not changed');
+      }
+
+      bool gameover = isGameOver(grid);
+      if (gameover) {
+        print('game over');
+        setState(() {
+          isgameOver = true;
+        });
+      }
+
+      bool gamewon = isGameWon(grid);
+      if (gamewon) {
+        print("GAME WON");
+        setState(() {
+          isgameWon = true;
+        });
+      }
+      print(grid);
+      print(score);
+    }
   }
 }
