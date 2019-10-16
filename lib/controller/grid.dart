@@ -1,6 +1,7 @@
 import 'package:augarde_2048/model/point.dart';
 import 'dart:math';
 
+/// Return a blank Grid.
 List<List<int>> blankGrid() {
   List<List<int>> rows = [];
   for(int i = 0; i < 4; i++) {
@@ -9,6 +10,10 @@ List<List<int>> blankGrid() {
   return rows;
 }
 
+/// Compare 2 Grid.
+/// @param Grid a
+/// @param Grid b
+/// Return True if 2 Grid are equals, False else
 bool compare(List<List<int>> a, List<List<int>> b) {
   for(int i = 0; i < 4; i++) {
     for(int j = 0; j < 4; j++) {
@@ -20,6 +25,9 @@ bool compare(List<List<int>> a, List<List<int>> b) {
   return true;
 }
 
+/// Create a copy of Grid
+/// @param Grid grid
+/// Return a new Grid
 List<List<int>> copyGrid(List<List<int>> grid) {
   List<List<int>> extraGrid = blankGrid();
   for(int i = 0; i < 4; i++) {
@@ -30,6 +38,9 @@ List<List<int>> copyGrid(List<List<int>> grid) {
   return extraGrid;
 }
 
+/// Create a Grid reversed
+/// @param Grid grid
+/// Return a new Grid reversed
 List<List<int>> flipGrid(List<List<int>> grid){
   for(int i = 0; i < 4; i++) {
     List<int> row = grid[i];
@@ -38,6 +49,9 @@ List<List<int>> flipGrid(List<List<int>> grid){
   return grid;
 }
 
+/// Create a Grid transposed
+/// @param Grid grid
+/// Return a new Grid transposed
 List<List<int>> transposeGrid(List<List<int>> grid){
   List<List<int>> newGrid = blankGrid();
   for (int i = 0; i < 4; i++) {
@@ -48,6 +62,10 @@ List<List<int>> transposeGrid(List<List<int>> grid){
   return newGrid;
 }
 
+/// Add Number Tile in Grid
+/// @param Grid grid
+/// @param Grid gridNew
+/// Return a new Grid with new numbers
 List<List<int>> addNumber(List<List<int>> grid, List<List<int>> gridNew){
   List<Point> options = [];
   for (int i = 0; i < 4; i++) {
