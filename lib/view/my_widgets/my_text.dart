@@ -7,6 +7,7 @@ class MyText extends Text {
     double fontSize: 17.0,
     FontStyle style: FontStyle.normal,
     Color color: Colors.white,
+    bool textBold: false,
   }): super(
       data,
       textAlign: alignment,
@@ -14,6 +15,7 @@ class MyText extends Text {
         fontSize: fontSize,
         fontStyle: style,
         color: color,
+        fontWeight: (textBold) ? FontWeight.bold : FontWeight.normal,
       )
   );
 

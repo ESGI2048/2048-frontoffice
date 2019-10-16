@@ -18,12 +18,11 @@ class _ItemTileState extends State<ItemTile> {
   Widget build(BuildContext context) {
     return Container(
       child: Center(
-        child: Text(
+        child: MyText(
           widget.number,
-          style: TextStyle(
-              fontSize: widget.size,
-              fontWeight: FontWeight.bold,
-              color: Color(fontColorTwoFour)),
+          color: Color(fontColorTwoFour),
+          fontSize: widget.size,
+          textBold: true,
         ),
       ),
       width: widget.width,

@@ -15,7 +15,8 @@ const int transparentWhite = 0x80FFFFFF;
 
 
 //Icons
-Icon settingsIcon = Icon(Icons.settings);
+const Icon settingsIcon = Icon(Icons.settings);
+const Icon refreshIcon = Icon(Icons.refresh, color: Colors.white70,);
 
 
 // Keys NodeJS
