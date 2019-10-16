@@ -1,8 +1,9 @@
+import 'package:shared_preferences/shared_preferences.dart';
 
 /// Return List contains new score and new Row after swipe
-List operate(List<int> row, int score) {
+List operate(List<int> row, int score,SharedPreferences sharedPref) {
   row = slide(row);
-  List result = combine(row, score);
+  List result = combine(row, score, sharedPref);
   int sc = result[0];
   row = result[1];
   row = slide(row);
@@ -41,13 +42,21 @@ List<int> zeroArray(int length) {
 }
 
 /// Return List contains score and a new Row after combine 2 equals number
-List combine(List<int> row, int score) {
+List combine(List<int> row, int score, SharedPreferences sharedPref) {
   for (int i = 3; i >= 1; i--) {
     int a = row[i];
     int b = row[i - 1];
     if (a == b) {
       row[i] = a + b;
       score += row[i];
+      int sc = sharedPref.getInt('high_score');
+      if(sc == null){
+        sharedPref.setInt('high_score', score);
+      }else {
+        if(score > sc) {
+          sharedPref.setInt('high_score', score);
+        }
+      }
       row[i - 1] = 0;
     }
   }

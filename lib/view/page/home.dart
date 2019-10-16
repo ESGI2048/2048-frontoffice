@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:augarde_2048/view/my_material.dart';
 import 'package:augarde_2048/controller/grid.dart';
 import 'package:augarde_2048/controller/game.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -14,6 +15,7 @@ class _HomePageState extends State<HomePage> {
   int score = 0;
   bool isgameOver = false;
   bool isgameWon = false;
+  SharedPreferences sharedPreferences;
 
   @override
   void initState() {
@@ -165,9 +167,43 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                     ),
+
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20.0),
+                        color: Color(gridBackground),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.all(10.0),
+                        child: Column(
+                          children: <Widget>[
+                            MyText(
+                              'High Score',
+                              textBold: true,
+                            ),
+                            FutureBuilder<String>(
+                              future: getHighScore(),
+                              builder: (ctx, snapshot) {
+                                if (snapshot.hasData) {
+                                  return MyText(
+                                    snapshot.data,
+                                    textBold: true,
+                                  );
+                                } else {
+                                  return MyText(
+                                    '0',
+                                    textBold: true,
+                                  );
+                                }
+                              },
+                            )
+                          ],
+                        ),
+                      ),
+                    )
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -263,7 +299,7 @@ class _HomePageState extends State<HomePage> {
       print('past $past');
       for (int i = 0; i < 4; i++) {
         setState(() {
-          List result = operate(grid[i], score);
+          List result = operate(grid[i], score, sharedPreferences);
           score = result[0];
           print('score in set state $score');
           grid[i] = result[1];
@@ -314,4 +350,14 @@ class _HomePageState extends State<HomePage> {
       print(score);
     }
   }
+
+  Future<String> getHighScore() async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    int score = sharedPreferences.getInt('high_score');
+    if (score == null) {
+      score = 0;
+    }
+    return score.toString();
+  }
+
 }

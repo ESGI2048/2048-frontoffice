@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         fontFamily: 'StarJedi'
       ),
-      home: LogController(),
+      home: HomePage(),//LogController(),
       debugShowCheckedModeBanner: false,
     );
   }
