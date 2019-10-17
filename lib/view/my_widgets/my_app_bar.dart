@@ -3,11 +3,11 @@ import 'package:augarde_2048/view/my_material.dart';
 
 class MyAppBar extends SliverAppBar {
 
-  MyAppBar({@required String title, @required AssetImage image, double height: 150.0}) : super(
+  MyAppBar({@required String title, @required String image_path, double height: 150.0}) : super(
       pinned: true,
       flexibleSpace: FlexibleSpaceBar(
-        title: MyText(title, color: white,),
-        background: Image(image: image, fit: BoxFit.cover,),
+        title: MyText(title, color: black, textBold: true, fontSize: 20.0,),
+        background: Image.network(image_path, fit: BoxFit.cover,),
       ),
       expandedHeight: height
   );

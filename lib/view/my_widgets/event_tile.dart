@@ -28,8 +28,7 @@ class _EventTileState extends State<EventTile> {
             padding: EdgeInsets.all(15.0),
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: NetworkImage(
-                    "https://www.citationbonheur.fr/wp-content/uploads/2018/09/L_influence_du_paysage_sur_le_bonheur.jpg"),
+                image: NetworkImage(widget.event.file_path),
                 //Image.network("https://www.citationbonheur.fr/wp-content/uploads/2018/09/L_influence_du_paysage_sur_le_bonheur.jpg"),
                 fit: BoxFit.fill,
                 alignment: Alignment.center,

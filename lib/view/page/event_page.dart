@@ -1,3 +1,4 @@
+import 'package:augarde_2048/controller/bdd_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:augarde_2048/view/my_material.dart';
 import 'package:augarde_2048/model/event.dart';
@@ -8,6 +9,10 @@ class EventPage extends StatefulWidget {
 }
 
 class _EventPageState extends State<EventPage> {
+
+  Future<List<Event>> eventList;
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,13 +25,35 @@ class _EventPageState extends State<EventPage> {
         ),
         backgroundColor: Color(gridBackground),
       ),
-      body: ListView.builder(
-          itemCount: 30,
-          itemBuilder: (BuildContext context, int index) {
-            Event event = Event(1, "Title Event", "Une description", "12 rue Nation, 75010 Paris", "http://localhost.png", DateTime.now().millisecondsSinceEpoch);
-            return EventTile(event);
+      body: FutureBuilder<List<Event>> (
+        future: eventList = BddHelper().getEvents(),
+        builder: (ctx, snapshot) {
+          if (snapshot.hasData) {
+            List<Event> lst = snapshot.data;
+            return ListView.builder(
+                itemCount: lst.length,
+                itemBuilder: (BuildContext context, int index) {
+                  Event event = lst[index];
+                  //Event event = Event(1, "Title Event", "Une description", "12 rue Nation, 75010 Paris", "http://localhost.png", DateTime.now().toString());
+                  return EventTile(event);
+                }
+            );
+          } else {
+            return Text("Aucun événements pour le moment");
           }
-      ),
+        }
+      )
     );
   }
 }
+
+/*
+
+ListView.builder(
+          itemCount: eventList,
+          itemBuilder: (BuildContext context, int index) {
+            Event event = Event(1, "Title Event", "Une description", "12 rue Nation, 75010 Paris", "http://localhost.png", DateTime.now().toString());
+            return EventTile(event);
+          }
+      ),
+ */

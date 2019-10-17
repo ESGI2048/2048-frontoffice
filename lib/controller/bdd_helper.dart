@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'dart:io';
 //import 'package:flutter/material.dart';
+import 'package:augarde_2048/model/event.dart';
 import 'package:augarde_2048/model/user.dart';
 import 'package:augarde_2048/view/my_material.dart';
 import 'package:flutter/cupertino.dart';
@@ -32,7 +34,7 @@ class BddHelper {
   }
 
 
-  // POST
+  // POST AUTHENTIFICATION USER SIGN UP
   Future<bool> postUserSignUp(String login, String password) async {
     // set up POST request arguments
     String json = '{"login": "$login", "password": "$password"}';
@@ -50,7 +52,30 @@ class BddHelper {
   }
 
 
+  Future<List<Event>> getEvents() async {
+    String url = '${hostname()}/event';
+    Response response = await get(url);
+    int statusCode = response.statusCode;
+    String jsonString = response.body;
+    var res = jsonDecode(jsonString);
+    print('Status: $statusCode, $jsonString, $res');
+    if (statusCode == 200) {
+      return createListEvent(res);
+    }
+    return null;
+  }
 
+  List<Event> createListEvent(List<dynamic> json) {
+
+    List<Event> list = new List();
+    json.forEach((elem) async {
+      Event event = Event.fromJson(elem);
+      event.setFilePath('${hostname()}/resource/${event.file_path}');
+      list.add(event);
+    });
+
+    return list;
+  }
 
 
   // GET all

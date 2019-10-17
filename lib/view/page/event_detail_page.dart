@@ -14,7 +14,7 @@ class EventDetail extends StatelessWidget {
     return Scaffold(
       body: NestedScrollView(
           headerSliverBuilder: (BuildContext build, bool scrolled) {
-            return [MyAppBar(title: event.name, image: logoImage)];
+            return [MyAppBar(title: event.name, image_path: event.file_path)];
           },
           body: SafeArea(
               child: SingleChildScrollView(
