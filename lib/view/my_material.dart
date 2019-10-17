@@ -10,3 +10,4 @@ export 'my_widgets/my_textfield.dart';
 export 'my_widgets/painter.dart';
 export 'my_widgets/menu_two_items.dart';
 export 'my_widgets/event_tile.dart';
+export 'my_widgets/my_app_bar.dart';

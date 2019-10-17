@@ -1,3 +1,4 @@
+import 'package:augarde_2048/view/my_widgets/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:augarde_2048/view/page/home_page.dart';
 import 'package:augarde_2048/controller/log_controller.dart';
@@ -11,7 +12,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: '2048',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.brown,
         fontFamily: 'StarJedi'
       ),
       home: LogController(),//HomePage(),
