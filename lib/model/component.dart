@@ -25,6 +25,10 @@ class Component {
     };
   }
 
+  setFilePath(String filePath) {
+    this.file_path = filePath;
+  }
+
   /*
   String toJsonString() {
     return '{"login": "$login", "password": "$password"}';

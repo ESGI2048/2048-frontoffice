@@ -1,3 +1,5 @@
+import 'package:augarde_2048/controller/bdd_helper.dart';
+import 'package:augarde_2048/model/component.dart';
 import 'package:flutter/material.dart';
 import 'package:augarde_2048/view/my_material.dart';
 import 'package:augarde_2048/controller/grid.dart';
@@ -17,6 +19,7 @@ class _HomePageState extends State<HomePage> {
   bool isgameOver = false;
   bool isgameWon = false;
   SharedPreferences sharedPreferences;
+  Future<List<Component>> componentList;
 
   @override
   void initState() {
@@ -97,30 +100,40 @@ class _HomePageState extends State<HomePage> {
                   children: <Widget>[
                     Padding(
                       padding: EdgeInsets.all(10.0),
-                      child: GestureDetector(
-                        child: GridView.count(
-                          primary: false,
-                          crossAxisSpacing: 10.0,
-                          mainAxisSpacing: 10.0,
-                          crossAxisCount: 4,
-                          children: getGrid(gridWidth, gridHeight),
-                        ),
-                        onVerticalDragEnd: (DragEndDetails details) {
-                          //primaryVelocity -ve up +ve down
-                          if (details.primaryVelocity < 0) {
-                             handleGesture(0);
-                          } else if (details.primaryVelocity > 0) {
-                             handleGesture(1);
+                      child: FutureBuilder<List<Component>>(
+                          future: componentList = BddHelper().getComponents(),
+                          builder: (ctx, snapshot) {
+                            if (snapshot.hasData) {
+                              List<Component> lst = snapshot.data;
+                              return GestureDetector(
+                                child: GridView.count(
+                                  primary: false,
+                                  crossAxisSpacing: 10.0,
+                                  mainAxisSpacing: 10.0,
+                                  crossAxisCount: 4,
+                                  children: getGrid(gridWidth, gridHeight, lst),
+                                ),
+                                onVerticalDragEnd: (DragEndDetails details) {
+                                  //primaryVelocity -ve up +ve down
+                                  if (details.primaryVelocity < 0) {
+                                    handleGesture(0);
+                                  } else if (details.primaryVelocity > 0) {
+                                    handleGesture(1);
+                                  }
+                                },
+                                onHorizontalDragEnd: (details) {
+                                  //-ve right, +ve left
+                                  if (details.primaryVelocity > 0) {
+                                    handleGesture(2);
+                                  } else if (details.primaryVelocity < 0) {
+                                    handleGesture(3);
+                                  }
+                                },
+                              );
+                            } else {
+                              return Text("Waiting ...");
+                            }
                           }
-                        },
-                        onHorizontalDragEnd: (details) {
-                          //-ve right, +ve left
-                          if (details.primaryVelocity > 0) {
-                             handleGesture(2);
-                          } else if (details.primaryVelocity < 0) {
-                             handleGesture(3);
-                          }
-                        },
                       ),
                     ),
                     isgameOver
@@ -227,8 +240,11 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+
   /// Return Grid
-  List<Widget> getGrid(double width, double height) {
+  List<Widget> getGrid(double width, double height, List<Component> lst) {
+    Component component;
+    List<Component> lstCopy;
     List<Widget> grids = [];
     for (int i = 0; i < 4; i++) {
       for (int j = 0; j < 4; j++) {
@@ -236,21 +252,58 @@ class _HomePageState extends State<HomePage> {
         String number;
         int color;
         if (num == 0) {
+          component = Component(0, "");
           color = emptyGridBackground;
           number = "";
         } else if (num == 2 || num == 4) {
+          if (num == 2) {
+            lstCopy = lst.where((item) => item.value == 2).toList();
+            component = lstCopy[0];
+          } else if (num == 4) {
+            lstCopy = lst.where((item) => item.value == 4).toList();
+            component = lstCopy[0];
+          }
           color = gridColorTwoFour;
           number = "$num";
         } else if (num == 8 || num == 64 || num == 256) {
+          if (num == 8) {
+            lstCopy = lst.where((item) => item.value == 8).toList();
+            component = lstCopy[0];
+          } else if (num == 64) {
+            lstCopy = lst.where((item) => item.value == 64).toList();
+            component = lstCopy[0];
+          } else if (num == 256) {
+            lstCopy = lst.where((item) => item.value == 256).toList();
+            component = lstCopy[0];
+          }
           color = gridColorEightSixtyFourTwoFiftySix;
           number = "$num";
         } else if (num == 16 || num == 32 || num == 1024) {
+          if (num == 16) {
+            lstCopy = lst.where((item) => item.value == 16).toList();
+            component = lstCopy[0];
+          } else if (num == 32) {
+            lstCopy = lst.where((item) => item.value == 32).toList();
+            component = lstCopy[0];
+          } else if (num == 1024) {
+            lstCopy = lst.where((item) => item.value == 1024).toList();
+            component = lstCopy[0];
+          }
           color = gridColorSixteenThirtyTwoOneZeroTwoFour;
           number = "$num";
         } else if (num == 128 || num == 512) {
+          if (num == 128) {
+            lstCopy = lst.where((item) => item.value == 128).toList();
+            component = lstCopy[0];
+          } else if (num == 512) {
+            lstCopy = lst.where((item) => item.value == 512).toList();
+            component = lstCopy[0];
+          }
           color = gridColorOneTwentyEightFiveOneTwo;
           number = "$num";
         } else {
+          lstCopy = lst.where((item) => item.value == 2048).toList();
+          component = lstCopy[0];
           color = gridColorWin;
           number = "$num";
         }
@@ -269,7 +322,8 @@ class _HomePageState extends State<HomePage> {
             size = 20.0;
             break;
         }
-        grids.add(ItemTile(number, width, height, color, size));
+        print("CASE $i,$j --> valeur: ${component.value}");
+        grids.add(ItemTile(number, width, height, color, size, component));
       }
     }
     return grids;
