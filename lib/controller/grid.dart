@@ -72,6 +72,7 @@ List<List<int>> addNumber(List<List<int>> grid, List<List<int>> gridNew){
     for (int j = 0; j < 4; j++) {
       if (grid[i][j] == 0) {
         options.add(Point(i, j));
+
       }
     }
   }

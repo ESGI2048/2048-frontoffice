@@ -19,6 +19,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
+    //
     grid = blankGrid();
     gridNew = blankGrid();
     addNumber(grid, gridNew);
