@@ -3,6 +3,7 @@ import 'package:augarde_2048/view/my_material.dart';
 import 'package:augarde_2048/controller/grid.dart';
 import 'package:augarde_2048/controller/game.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:augarde_2048/view/page/event_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -48,30 +49,45 @@ class _HomePageState extends State<HomePage> {
           padding: EdgeInsets.all(20.0),
           child: Column(
             children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(bottom: 20.0),
-                child: Container(
-                  width: 200.0,
-                  height: 82.0,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20.0),
-                    color: Color(gridBackground),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  PaddingWith(
+                    widget: IconButton(icon: eventIcon, onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => EventPage())), iconSize: 37.0,),
+                    top: 0.0,
+                    left: 5.0,
+                    right: 10.0,
+                    bottom: 20.0,
                   ),
-                  child: Column(
-                    children: <Widget>[
-                      PaddingWith(
-                        widget: MyText('Score', textBold: true,),
-                        top: 10.0,
-                        bottom: 2.0,
+
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 20.0),
+                    child: Container(
+                      width: 200.0,
+                      height: 82.0,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20.0),
+                        color: Color(gridBackground),
                       ),
-                      PaddingWith(
-                        widget: MyText('$score', fontSize: 22.0, textBold: true,),
-                        top: 10.0,
-                        bottom: 10.0,
+                      child: Column(
+                        children: <Widget>[
+                          PaddingWith(
+                            widget: MyText('Score', textBold: true,),
+                            top: 10.0,
+                            bottom: 2.0,
+                          ),
+                          PaddingWith(
+                            widget: MyText('$score', fontSize: 22.0, textBold: true,),
+                            top: 10.0,
+                            bottom: 10.0,
+                          ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
-                ),
+
+                  SizedBox(width: 75.0,),
+                ],
               ),
 
               Container(
@@ -174,7 +190,7 @@ class _HomePageState extends State<HomePage> {
                         color: Color(gridBackground),
                       ),
                       child: Padding(
-                        padding: EdgeInsets.all(10.0),
+                        padding: EdgeInsets.all(15.0),
                         child: Column(
                           children: <Widget>[
                             MyText(

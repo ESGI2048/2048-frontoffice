@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:augarde_2048/view/page/home.dart';
+import 'package:augarde_2048/view/page/home_page.dart';
 import 'package:augarde_2048/controller/log_controller.dart';
 
 void main() => runApp(MyApp());

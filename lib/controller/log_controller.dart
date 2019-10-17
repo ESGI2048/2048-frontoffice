@@ -1,5 +1,5 @@
 import 'package:augarde_2048/controller/bdd_helper.dart';
-import 'package:augarde_2048/view/page/home.dart';
+import 'package:augarde_2048/view/page/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:augarde_2048/view/my_material.dart';
 import 'package:augarde_2048/controller/alert_helper.dart';

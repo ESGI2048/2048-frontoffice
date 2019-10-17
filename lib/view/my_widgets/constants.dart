@@ -29,6 +29,7 @@ AssetImage logoImage = AssetImage("assets/logo_augarde.png");
 //Icons
 const Icon settingsIcon = Icon(Icons.settings);
 const Icon refreshIcon = Icon(Icons.refresh, color: Colors.white70,);
+const Icon eventIcon = Icon(Icons.event);
 
 
 // Keys NodeJS
