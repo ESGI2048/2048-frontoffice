@@ -1,10 +1,21 @@
+class Engine {
+
+}
+
+class Position{
+  int x;
+  int y;
+
+}
+
+
 class ComponentGrid {
   //List<List<Component>> gridComponent;
 
   void InterpretAction(int direction){
     switch(direction)
     {
-      
+
     }
   }
 }
@@ -16,7 +27,8 @@ class Component {
   int _value;
   String _imageFilePath;
   String _type;
-  int x, y;
+
+  Position position;
 
   Component(String name, int value, String imageFilePath, String type) {
     _name = name;
@@ -32,15 +44,16 @@ class Component {
 * Bracelet
 * */
 
-  static void MoveComponent(Component c, int x, int y){
-
-  }
-
-
   static Component AddTwoComponents(Component c1, Component c2)
   {
 
   }
+
+
+  static void MoveComponent(Component c, int x, int y){
+
+  }
+
   static Component AddTwoComponents2(Component c1, Component c2)
   {
 

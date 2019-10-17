@@ -220,17 +220,21 @@ class _HomePageState extends State<HomePage> {
         int num = grid[i][j];
         String number;
         int color;
+
         if (num == 0) {
           color = emptyGridBackground;
           number = "";
         } else if (num == 2 || num == 4) {
           color = gridColorTwoFour;
           number = "$num";
+          //image1 = 4;
+
         } else if (num == 8 || num == 64 || num == 256) {
           color = gridColorEightSixtyFourTwoFiftySix;
           number = "$num";
         } else if (num == 16 || num == 32 || num == 1024) {
           color = gridColorSixteenThirtyTwoOneZeroTwoFour;
+
           number = "$num";
         } else if (num == 128 || num == 512) {
           color = gridColorOneTwentyEightFiveOneTwo;
@@ -254,7 +258,7 @@ class _HomePageState extends State<HomePage> {
             size = 20.0;
             break;
         }
-        grids.add(ItemTile(number, width, height, color, size));
+        grids.add(ItemTile(number, width, height, color, size, null));
       }
     }
     return grids;
