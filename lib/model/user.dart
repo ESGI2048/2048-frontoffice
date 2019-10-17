@@ -13,8 +13,12 @@ class User {
   // method
   Map<String, dynamic> toJson() {
     return {
-      'login': login,
-      'password': password,
+      "login": login,
+      "password": password,
     };
+  }
+
+  String toJsonString() {
+    return '{"login": "$login", "password": "$password"}';
   }
 }

@@ -1,3 +1,5 @@
+import 'package:augarde_2048/controller/bdd_helper.dart';
+import 'package:augarde_2048/view/page/home.dart';
 import 'package:flutter/material.dart';
 import 'package:augarde_2048/view/my_material.dart';
 import 'package:augarde_2048/controller/alert_helper.dart';
@@ -48,7 +50,7 @@ class _LogState extends State<LogController> {
                 child: Column(
                   children: <Widget>[
                     PaddingWith(widget: Image(image: logoImage, height: 100.0,), top: 20.0, bottom: 20.0,),
-                    PaddingWith(widget: Menu2Items(item1: "Connexion", item2: "Création", pageController: _pageController), top: 20.0, bottom: 20.0,),
+                    PaddingWith(widget: Menu2Items(item1: "Connexion", item2: "Inscription", pageController: _pageController), top: 20.0, bottom: 20.0,),
                     Expanded(
                       flex: 2,
                       child: PageView(
@@ -106,9 +108,11 @@ class _LogState extends State<LogController> {
       if (_pwd.text != null && _pwd.text != "") {
         if (exists) {
           //Connexion avec mail et pwd
+          signInUser();
          // FireHelper().signIn(_mail.text, _pwd.text);
         } else {
           //Inscription
+          signUpUser();
           //FireHelper().createAccount(_mail.text, _pwd.text, _name.text, _surname.text);
         }
       } else {
@@ -124,4 +128,19 @@ class _LogState extends State<LogController> {
   hideKeyboard() {
     FocusScope.of(context).requestFocus(FocusNode());
   }
+
+  signUpUser() async {
+    var res = await BddHelper().postUserSignUp(_login.text, _pwd.text);
+    if (res) {
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage()));
+    }
+  }
+
+  signInUser() async {
+    var res = await BddHelper().getUserLogin(_login.text);
+    if (res) {
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage()));
+    }
+  }
+
 }
