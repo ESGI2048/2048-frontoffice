@@ -67,7 +67,7 @@ List combine(List<int> row, int score, SharedPreferences sharedPref) {
 bool isGameWon(List<List<int>> grid) {
   for (int i = 0; i < 4; i++) {
     for (int j = 0; j < 4; j++) {
-      if (grid[i][j] == 2048) {
+      if (grid[i][j] == 64) {
         return true;
       }
     }

@@ -1,5 +1,6 @@
 import 'package:augarde_2048/controller/bdd_helper.dart';
 import 'package:augarde_2048/model/component.dart';
+import 'package:augarde_2048/view/page/info_game.dart';
 import 'package:flutter/material.dart';
 import 'package:augarde_2048/view/my_material.dart';
 import 'package:augarde_2048/controller/grid.dart';
@@ -89,7 +90,13 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
 
-                  SizedBox(width: 75.0,),
+                  PaddingWith(
+                    widget: IconButton(icon: infoIcon, onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => InfoGame(componentList))), iconSize: 37.0,),
+                    top: 0.0,
+                    left: 5.0,
+                    right: 10.0,
+                    bottom: 20.0,
+                  ),
                 ],
               ),
 
@@ -142,27 +149,16 @@ class _HomePageState extends State<HomePage> {
                       color: Color(transparentWhite),
                       child: Center(
                         child: MyText(
-                          'Game over !',
+                          'Perdu !',
                           fontSize: 30.0,
                           textBold: true,
-                          color: Color(gridBackground),
+                          color: Color(fontColorTwoFour),
                         ),
                       ),
                     )
                         : SizedBox(),
                     isgameWon
-                        ? Container(
-                      height: height,
-                      color: Color(transparentWhite),
-                      child: Center(
-                        child: MyText(
-                          'You won !',
-                          fontSize: 30.0,
-                          textBold: true,
-                          color: Color(gridBackground),
-                        ),
-                      ),
-                    )
+                        ? showWinGame(height)
                         : SizedBox(),
                   ],
                 ),
@@ -265,44 +261,23 @@ class _HomePageState extends State<HomePage> {
           }
           color = gridColorTwoFour;
           number = "$num";
-        } else if (num == 8 || num == 64 || num == 256) {
-          if (num == 8) {
-            lstCopy = lst.where((item) => item.value == 8).toList();
-            component = lstCopy[0];
-          } else if (num == 64) {
-            lstCopy = lst.where((item) => item.value == 64).toList();
-            component = lstCopy[0];
-          } else if (num == 256) {
-            lstCopy = lst.where((item) => item.value == 256).toList();
-            component = lstCopy[0];
-          }
+        } else if (num == 8) {
+          lstCopy = lst.where((item) => item.value == 8).toList();
+          component = lstCopy[0];
           color = gridColorEightSixtyFourTwoFiftySix;
           number = "$num";
-        } else if (num == 16 || num == 32 || num == 1024) {
+        } else if (num == 16 || num == 32) {
           if (num == 16) {
             lstCopy = lst.where((item) => item.value == 16).toList();
             component = lstCopy[0];
           } else if (num == 32) {
             lstCopy = lst.where((item) => item.value == 32).toList();
             component = lstCopy[0];
-          } else if (num == 1024) {
-            lstCopy = lst.where((item) => item.value == 1024).toList();
-            component = lstCopy[0];
           }
           color = gridColorSixteenThirtyTwoOneZeroTwoFour;
           number = "$num";
-        } else if (num == 128 || num == 512) {
-          if (num == 128) {
-            lstCopy = lst.where((item) => item.value == 128).toList();
-            component = lstCopy[0];
-          } else if (num == 512) {
-            lstCopy = lst.where((item) => item.value == 512).toList();
-            component = lstCopy[0];
-          }
-          color = gridColorOneTwentyEightFiveOneTwo;
-          number = "$num";
         } else {
-          lstCopy = lst.where((item) => item.value == 2048).toList();
+          lstCopy = lst.where((item) => item.value == 64).toList();
           component = lstCopy[0];
           color = gridColorWin;
           number = "$num";
@@ -322,7 +297,6 @@ class _HomePageState extends State<HomePage> {
             size = 20.0;
             break;
         }
-        print("CASE $i,$j --> valeur: ${component.value}");
         grids.add(ItemTile(number, width, height, color, size, component));
       }
     }
@@ -428,6 +402,36 @@ class _HomePageState extends State<HomePage> {
       score = 0;
     }
     return score.toString();
+  }
+
+  Widget showWinGame(double height) {
+    String code;
+    return Container(
+      height: height,
+      color: Color(transparentWhite),
+      child: Center(
+        child: FutureBuilder<String>(
+         // future: ,
+          builder: (ctx, snapshot) {
+            if (snapshot.hasData) {
+              return MyText(
+                'Félicitation !\nVoici votre code de réduction:\n\n Gift15_Augarde (-15%)',
+                fontSize: 30.0,
+                textBold: true,
+                color: Color(fontColorTwoFour),
+              );
+            } else {
+              return MyText(
+                'Félicitation !\nVoici votre code de réduction:\n\n Gift15_Augarde (-15%)',
+                fontSize: 30.0,
+                textBold: true,
+                color: Color(fontColorTwoFour),
+              );
+            }
+          },
+        ) ,
+      ),
+    );
   }
 
 }

@@ -20,14 +20,6 @@ class _ItemTileState extends State<ItemTile> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Center(
-        child: MyText(
-          widget.number,
-          color: Color(fontColorTwoFour),
-          fontSize: widget.size,
-          textBold: true,
-        ),
-      ),
       width: widget.width,
       height: widget.height,
       decoration: (widget.number == '' && (widget.component.value == 0 || widget.component.file_path == ''))

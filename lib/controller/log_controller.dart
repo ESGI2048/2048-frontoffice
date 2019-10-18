@@ -137,7 +137,7 @@ class _LogState extends State<LogController> {
   }
 
   signInUser() async {
-    var res = await BddHelper().getUserLogin(_login.text);
+    var res = await BddHelper().getUserLogin(_login.text, _pwd.text);
     if (res) {
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage()));
     }

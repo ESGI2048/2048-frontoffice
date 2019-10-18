@@ -21,13 +21,14 @@ class BddHelper {
   }
 
   // GET AUTHENTICATION FOR USER LOGIN
-  Future<bool> getUserLogin(String login) async {
-    String url = '${hostname()}/authentication/$login';
-    Response response = await get(url);
+  Future<bool> getUserLogin(String login, String password) async {
+    String json = '{"login": "$login", "password": "$password"}';
+    Response response = await post('${hostname()}/login', headers: headers, body: json);
     int statusCode = response.statusCode;
     String jsonString = response.body;
     print('Status: $statusCode, $jsonString');
     if (statusCode == 200) {
+      me = User(login, password);
       return true;
     }
     return false;
@@ -37,10 +38,9 @@ class BddHelper {
   // POST AUTHENTIFICATION USER SIGN UP
   Future<bool> postUserSignUp(String login, String password) async {
     // set up POST request arguments
-    String json = '{"login": "$login", "password": "$password"}';
-    print(json);
+    String json = '{"firstName": "test", "lastName": "test", "email": "test@example.fr", "login": "$login", "score": 0, "phone": "07.00.00.00.00", "password": "$password"}';
     // make POST request
-    Response response = await post('${hostname()}/user', headers: headers, body: json);
+    Response response = await post('${hostname()}/signup', headers: headers, body: json);
     int statusCode = response.statusCode;
     String body = response.body;
     print('Status: $statusCode, $body');
@@ -83,6 +83,7 @@ class BddHelper {
     String url = '${hostname()}/component';
     Response response = await get(url);
     int statusCode = response.statusCode;
+
     String jsonString = response.body;
     var res = jsonDecode(jsonString);
     print('Status: $statusCode, $jsonString, $res');
